@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Account Settings{% endblock title %}
+{% block main-content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-sm-8">
+                <h3 class="fw-bold text-center">Account Settings for {{user.username}}</h3><hr>
+                <form action="" method="post" class="shadow p-5" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <label for="image" class="fw-bold mb-2">Profile Image </label>
+                        <img src="{{user_profile.profileimg.url}}" width="85px" height="85px" class="mb-3 d-flex d-block mx-auto" style="border-radius: 50%;"  alt="">
+                        <input type="file" name="image" value="" class="d-flex d-block mx-auto form-control-sm border">
+                    </div>
+                    <div class="mb-4">
+                        <label for="name" class="form-label fw-bold">Name</label>
+                        <textarea name="name" id="name" class="form-control" rows="1">{{user_profile.user_name}}</textarea>   
+                    </div>
+                    <div class="mb-4">
+                        <label for="bio" class="form-label fw-bold">Bio</label>
+                        <textarea name="bio" id="bio" class="form-control" rows="2">{{user_profile.bio}}</textarea>   
+                    </div>
+                    <div class="mb-4">
+                        <label for="" class="form-label fw-bold">Location</label>
+                        <input type="text" name="location" value="{{user_profile.location}}" class="form-control">
+                    </div>
+                    <button class="btn btn-danger fw-bold">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock main-content %}

@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home{% endblock title %}
+{% block main-content %} 
+   <div class="container">
+    <div class="row ">
+        <div class="col-sm-7 mx-auto">
+            {% for post in posts reversed %}
+            <div class="card shadow ">
+                <div class="card-body p-6 ">
+                 <a href="/profile/{{post.user}}" style=" color: inherit; text-decoration: none;"> <h5 class="card-title">{{post.user}}</h5></a>
+                  <div class="d-flex justify-content-center">
+                  <img src="{{post.image.url}}" class="card-img-top "  alt="Your image">
+                  </div>
+                  <h5 class="card-title d-inline-block my-2 ">{{post.user}}   </h5>&nbsp;&nbsp; <p class="card-text d-inline-block">  {{post.caption}}</p>
+                  <a href="{{post.image.url}}" class="btn float-start" download><i class="bi bi-download  "style="font-size: 1.5em; font-weight: 500;""></i></a>
+                </div>
+                <div class="card-body mt-0">
+                <a href="/like-post?post_id={{post.id}}" class="btn"><i class="bi bi-heart "></i></a>
+                
+                  {% if post.no_of_likes == 0 %}
+                    <p>No likes</p>
+                  {% elif post.no_of_likes == 1 %}
+                    <p>{{post.no_of_likes}} Like</p>
+                  {% else %}
+                    <p>{{post.no_of_likes}} Likes</p>
+                  {% endif %}
+
+                </div>
+              </div> <br>
+            {% endfor %}
+        </div>
+        <div class="col-sm-4  mt-4 ">
+          <div class="row shadow">
+            <div class="col-sm-1 mt-2">
+              <a href="/profile/{{request.user}}"><img src="{{user_profile.profileimg.url}}" style="height: 55px; width: 55px; border-radius: 50%;" alt=""></a>
+            </div>
+            <div class="col-sm-2  mt-1 mx-auto" style="position: relative; left: -30px !important;" >
+              <a href="/profile/{{request.user}}" class="btn mb-1 p-1"><h6>{{request.user}} </h6></a>
+             <p style="margin-top: -30%; white-space: nowrap; position: relative; left: 5px;">{{user_profile.user_name}}</p>
+            </div>
+            <div class="col-sm-1 mx-auto mt-2 p-1">
+              <a href="{% url 'settings' %}" class="btn btn-danger ">settings</a>
+            </div>
+          </div>
+          <h6 style="opacity: 0.6;">suggestions</h6>
+          {% for suggestion in suggestions_username_pro_list %}
+          <div class="row  border ">
+            <div class="col-sm-1  mt-2">
+              <a href="/profile/{{suggestion.user}}"><img src="{{suggestion.profileimg.url}}" style="height: 45px; width: 45px; border-radius: 50%;" alt=""></a>
+            </div>
+            <div class="col-sm-2  mt-1 mx-auto" style="position: relative; left: -30px !important;" >
+              <a href="/profile/{{suggestion.user}}" class="btn mb-1 p-1"><h6>{{suggestion.user}} </h6></a>
+             <p style="margin-top: -30%; white-space: nowrap; opacity: 0.6; position: relative; left: 5px;">{{suggestion.user_name}}</p>
+            </div>
+            <div class="col-sm-1 mx-auto mt-2 p-1">
+              <a href="/profile/{{suggestion.user}}" class="btn btn-primary ">profile</a>
+            </div><br>
+          </div>
+          {% endfor %}
+        </div>
+    </div>
+   </div>
+
+
+      
+
+
+{% endblock main-content %}

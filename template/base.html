@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/pkk.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.rtl.min.css" integrity="sha384-WJUUqfoMmnfkBLne5uxXj+na/c7sesSJ32gI7GfCk4zO4GthUKhSEGyvQ839BC51" crossorigin="anonymous">
+    <title>Instagram | {% block title %}{% endblock title %}</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg   bg-white ">
+        <div class="container-fluid">
+          <a class="navbar-brand  " href="#">
+            <img src="{% static 'img/footer-logo.png' %}" class="mt-1 py-2 " height="50px" width="90px" alt="">
+          </a>
+          
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-left mb-2 mb-lg-0">
+              {% if request.user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link active fw-bold" aria-current="page" href="{% url 'home' %}">Home</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a href="#" class="nav-link fw-bold dropdown-toggle" role="button"  id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Post</a>
+                
+                
+                <div class="dropdown-menu shadow dropdown-menu-end text-center" aria-labelledby="dropdownMenuButton">
+                  <form class="px-4 py-3" action="addpost" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                   <div class="mb-4">
+                    <label for="image_upload" class="fw-bold mb-2">Upload Image</label>
+                    <input type="file" name="image_upload" value="" class="d-flex d-block mx-auto form-control-sm border">
+                   </div>
+
+                   <div class="mb-4">
+                    <label for="caption" class="form-label fw-bold">caption</label>
+                    <textarea name="caption" id="caption" class="form-control" rows="2"></textarea>
+                   </div>
+
+                    
+                    <button type="submit" class="btn btn-danger">Upload</button>
+                  </form>
+                
+                </div>
+                           
+
+              </li>
+            </ul>
+            
+            <ul class="navbar-nav me-auto ">
+              
+                <form method="post" action="/search"  class="d-flex" role="search">
+                  {% csrf_token %}
+                  <input class="form-control me-2" type="text" name="username" placeholder="Search" aria-label="Search">&nbsp;
+                  <button class="btn " type="submit"><i class="bi bi-search"></i></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </form>
+                
+              <li class="nav-item">
+                <a href="#"><img src="{{request.user.profileimg.url}}" alt=""></a>
+              </li>
+              <li class="nav-item">
+                <a href="/profile/{{request.user}}" class="nav-link fw-bold">{{request.user}}</a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'Logout' %}" class="nav-link fw-bold">Logout</a>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                <a href="{% url 'Login' %}" class="nav-link fw-bold">Log-In</a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'signup' %}" class="nav-link fw-bold">Sign UP</a>
+              </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      {% block main-content %}{% endblock main-content %}
+
+
+
+
+      <br><br><br>
+      <footer class="container-fluid bg-white text-center py-2 mt-3 fixed-bottom">
+        <a href="#" class="">
+          <img src="{% static 'img/footer-logo.png' %}" class="mt-3 py-2" height="50px" width="90px" alt="">
+        </a>
+      </footer>
+  
+ 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+</html>

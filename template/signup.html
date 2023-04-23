@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Sign Up{% endblock title %}
+{% block main-content %}
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-sm-6 ">
+                <h2 class="text-center fw-bold">Sign Up</h2><hr>
+                <form action="" class="shadow border p-5" method="post">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <label for="username" class="form-label fw-bold">Username</label>
+                        <input name="username" type="text" class="form-control" id="username" >
+                    </div>
+                      <div class="mb-4">
+                        <label for="email" class="form-label fw-bold">Email address</label>
+                        <input name="email" type="email" class="form-control" id="email" >
+                      </div>
+                      <div class="mb-4">
+                        <label for="password" class="form-label fw-bold">Password</label>
+                        <input name="password1" type="password" class="form-control" id="password" >
+                      </div>
+                      <div class="mb-4">
+                        <label for="confirm-password" class="form-label fw-bold">Confirm Password</label>
+                        <input name="password2" type="password" class="form-control" id="confirm-password" >
+                      </div>
+                      <button type="submit" class="btn btn-primary fw-bold ">Submit</button>
+                      {% for msg in messages %}
+                        <p>{{msg}}</p>
+                      {% endfor %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock main-content %}

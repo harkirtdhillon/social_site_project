@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Profile{% endblock title %}
+{% block main-content %}
+
+    <div class="container p-4">
+        <form action="/follow" method="post">
+        {% csrf_token %}
+        <div class="row d-flex  justify-content-center">
+            <div class="col-sm-3 " >
+                <img src="{{user_profile.profileimg.url}}"   style="border-radius: 50%; height: 200px; width: 200px; overflow: hidden;object-fit: contain;  background-color: black; " alt="">
+            </div>
+            <div class="col-sm-6">
+                <h2 class=" mb-1 p-1 d-inline-block ">{{user_profile.user}}</h2>
+
+                <input type="hidden" value="{{user.username}}" name="follower">
+                <input type="hidden" value="{{user_object.username}}" name="user">
+
+                {% if user_object.username == user.username %}
+                <a href="{% url 'settings' %}"><input type="button" value="Edit profile" class="btn btn-danger mb-3 "style="margin-left: 30px;"></a>
+                {% else %}
+                <input type="submit" value="{{button_text}}" class="{{btn_cls}} "style="margin-left: 40px;">
+                {% endif %}
+
+            <nav class="navbar navbar-expand-lg   bg-white mb-0  ">
+                    <div class="collapse navbar-collapse">
+                        <ul class="navbar-nav   p-0 " >
+
+                            {% if user_post_length == 0 %}
+                            <li class="nav-item fw-bold"><a href="#" class="nav-link active "><h5>0 post</h5></a></li>
+                            {% elif user_post_length == 1 %}
+                            <li class="nav-item fw-bold"><a href="#" class="nav-link active"><h5>{{user_post_length}} post</h5></a></li>
+                            {% else %}
+                            <li class="nav-item fw-bold"><a href="#" class="nav-link active"><h5>{{user_post_length}} posts</h5></a></li>
+                            {% endif %}
+
+                            {% if user_followers == 0 %}
+                            <li class="nav-item"><a href="#" class="nav-link fw-bold active"><h5>0 follower</h5></a></li>
+                            {% elif user_followers == 1 %}
+                            <li class="nav-item"><a href="#" class="nav-link fw-bold active"><h5>{{user_followers}} follower</h5></a></li>
+                            {% else %}
+                            <li class="nav-item"><a href="#" class="nav-link fw-bold active"><h5>{{user_followers}} followers</h5></a></li>
+                            {% endif %}
+
+                            {% if user_following == 0 %}
+                            <li class="nav-item"><a href="#" class="nav-link fw-bold active"><h5>0 following</h5></a></li>
+                            {% else %}
+                            <li class="nav-item"><a href="#" class="nav-link fw-bold active"><h5>{{user_following}} following</h5></a></li>
+                            {% endif %}
+
+                        </ul>
+                    </div>
+            </nav>
+                <h5 class="mb-1 p-1" >{{user_profile.user_name}}</h5>
+                <p class="fs-6 p-1">{{user_profile.bio|linebreaksbr}}</p>
+
+            </div>
+        </div>
+        </form>
+        <hr>
+        <div class="row d-flex justify-content-center">
+            <h4 class="text-center">Posts</h4>
+            {% for img in user_posts %}
+                <div class="col-sm-4 py-5">
+                    <div class="card" style="height: 350px; width: 350px; overflow: hidden;">
+                        <img src="{{img.image.url}}" style="height: 100%; width: 350px; object-fit: contain; background-color: rgb(231, 229, 229); "  alt="">
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock main-content %}
